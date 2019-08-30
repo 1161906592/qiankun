@@ -42,10 +42,10 @@ export function registerMicroApps<T extends object = {}>(apps: Array<Registrable
       async ({ name: appName }) => {
 
         // 获取入口 html 模板及脚本加载器
-        const { template: appContent, execScripts } = await importEntry(entry);
+        const { /* template: appContent, */ execScripts } = await importEntry(entry);
         // 第一次加载设置应用可见区域 dom 结构
         // 确保每次应用加载前容器 dom 结构已经设置完毕
-        render({ appContent, loading: true });
+        // render({ appContent, loading: true });
 
         let jsSandbox: Window = window;
         let mountSandbox = () => Promise.resolve();
@@ -79,11 +79,11 @@ export function registerMicroApps<T extends object = {}>(apps: Array<Registrable
               }
             },
             // 添加 mount hook, 确保每次应用加载前容器 dom 结构已经设置完毕
-            async () => render({ appContent, loading: true }),
+            // async () => render({ appContent, loading: true }),
             mountSandbox,
             mount,
             // 应用 mount 完成后结束 loading
-            async () => render({ appContent, loading: false }),
+            // async () => render({ appContent, loading: false }),
             async () => {
               if (afterMount.length) {
                 await Promise.all(afterMount.map(hook => hook(app)));
